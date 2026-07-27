@@ -20,11 +20,11 @@ jobs:
       - name: Build
         run: msbuild VideoWallpaper.sln /p:Configuration=Release /p:Platform=Win32
 
-      - name: Upload
+      - name: Upload EXE
         uses: actions/upload-artifact@v4
         with:
           name: VideoWallpaper
-          path: |
+          path: VideoWallpaper/bin/Win32/Release/**
             VideoWallpaper/Release/**
             VideoWallpaper/x64/Release/**
             VideoWallpaper/x86/Release/**

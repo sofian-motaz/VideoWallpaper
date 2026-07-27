@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>16.0</VCProjectVersion>
+    <ProjectGuid>{D86A5C47-14B7-4116-A9ED-19171FECB4DF}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>VideoWallpaper</RootNamespace>
+    <ProjectName>VideoWallpaper</ProjectName>
+    <!-- Targeting the Windows 7 SP1 platform SDK baseline. VS2019's bundled
+         10.0 SDK is fully compatible with Windows 7 SP1+ as long as we don't
+         call APIs newer than the _WIN32_WINNT level below. -->
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+
+  <!-- ============ Configuration Properties ============ -->
+  <PropertyGroup Condition="'$(Configuration)'=='Debug'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)'=='Release'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings" />
+  <ImportGroup Label="Shared" />
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+
+  <PropertyGroup>
+    <!-- Windows 7 SP1 is the minimum supported OS: _WIN32_WINNT_WIN7 = 0x0601 -->
+    <_ProjectFileVersion>16.0</_ProjectFileVersion>
+    <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)obj\$(Platform)\$(Configuration)\</IntDir>
+    <LinkIncremental Condition="'$(Configuration)'=='Debug'">true</LinkIncremental>
+    <LinkIncremental Condition="'$(Configuration)'=='Release'">false</LinkIncremental>
+  </PropertyGroup>
+
+  <!-- ============ Compiler / Linker settings ============ -->
+  <ItemDefinitionGroup Condition="'$(Configuration)'=='Debug'">
+    <ClCompile>
+      <WarningLevel>Level4</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_WIN32_WINNT=0x0601;WINVER=0x0601;UNICODE;_UNICODE;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <Optimization>Disabled</Optimization>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>Shell32.lib;Shlwapi.lib;Comctl32.lib;Comdlg32.lib;Advapi32.lib;User32.lib;Gdi32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+
+  <ItemDefinitionGroup Condition="'$(Configuration)'=='Release'">
+    <ClCompile>
+      <WarningLevel>Level4</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_WIN32_WINNT=0x0601;WINVER=0x0601;UNICODE;_UNICODE;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <!-- Static runtime so the EXE has minimal external dependencies,
+           per project requirements ("Static Runtime if possible"). -->
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <AdditionalDependencies>Shell32.lib;Shlwapi.lib;Comctl32.lib;Comdlg32.lib;Advapi32.lib;User32.lib;Gdi32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+
+  <!-- manifest: request the same visual style + per-monitor DPI awareness
+       so the control panel looks correct on Win7 through Win11 -->
+  <ItemDefinitionGroup>
+    <Manifest>
+      <AdditionalManifestFiles>app.manifest</AdditionalManifestFiles>
+    </Manifest>
+  </ItemDefinitionGroup>
+
+  <!-- ============ Source files ============ -->
+  <ItemGroup>
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="App.cpp" />
+    <ClCompile Include="Desktop.cpp" />
+    <ClCompile Include="VideoPlayer.cpp" />
+    <ClCompile Include="Tray.cpp" />
+    <ClCompile Include="Utilities.cpp" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ClInclude Include="App.h" />
+    <ClInclude Include="Desktop.h" />
+    <ClInclude Include="VideoPlayer.h" />
+    <ClInclude Include="Tray.h" />
+    <ClInclude Include="Utilities.h" />
+    <ClInclude Include="resource.h" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ResourceCompile Include="resource.rc" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Image Include="icons\app.ico" />
+    <Image Include="icons\tray.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="app.manifest" />
+    <None Include="README.md" />
+  </ItemGroup>
+
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets" />
+
+  <!-- Post-build: if a local .\libvlc\ folder exists next to the project
+       (a vendored/portable copy of VLC's redistributables), copy it beside
+       the built EXE so the app is fully self-contained out of the box. -->
+  <Target Name="CopyVlcRedistIfPresent" AfterTargets="Build">
+    <ItemGroup>
+      <VlcFiles Include="$(ProjectDir)libvlc\**\*.*" Condition="Exists('$(ProjectDir)libvlc')" />
+    </ItemGroup>
+    <Copy SourceFiles="@(VlcFiles)"
+          DestinationFolder="$(OutDir)libvlc\%(RecursiveDir)"
+          Condition="Exists('$(ProjectDir)libvlc')"
+          SkipUnchangedFiles="true" />
+  </Target>
+</Project>
